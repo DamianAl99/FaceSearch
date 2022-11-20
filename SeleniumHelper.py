@@ -41,5 +41,20 @@ class DriverHelper:
 
     def cerrar_ventantas(self):
         self.driver.quit()
+    
+    def existe_elemento(self, xpath: str, timeout = 0) -> bool:
+        time.sleep(timeout)
+        try:
+            self.driver.find_element("xpath", xpath)
+            return True
+        except:
+            return False
+    
+    def common(self):
+        return self.driver
+
+    def web_driver(self):
+        return webdriver
+
 
     

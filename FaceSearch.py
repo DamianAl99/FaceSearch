@@ -42,10 +42,17 @@ class InterfezUi:
     def hacer_operacion(self):
         pr = Proceso(self.precio_mi.get(), self.precio_ma.get(), self.precio_ma2.get(), self.buscar.get(), self.cuantas_veces.get())
         try:
-            self.ValidarInput()   
-            if(pr.Logueo()): raise Exception("Logueo", "Hubo un error en el logueo a Facebook")
-            if(pr.GoToMarketplace()): raise Exception("Ir al Market Place", "Hubo un error al hacer click en el icono Market place")
+            self.ValidarInput()
+            result = pr.Logueo()
+            if(result != ""): raise Exception("Logueo", result)
+            result = pr.GoToMarketplace()
+            if(): raise Exception("Ir al Market Place", "Hubo un error al hacer click en el icono Market place")
             if(pr.DoScrollForPage()): raise Exception("Scrolleo Web", "Error al scrollear la web")
+            self.buscar.delete(0, 'end')
+            self.cuantas_veces.delete(0, 'end')
+            self.precio_ma.delete(0, 'end')
+            self.precio_ma2.delete(0, 'end')
+            self.precio_mi.delete(0, 'end')
             pr.OpenTabs(pr.ExtractDataWeb())
         except Exception as ex:
             pr.CloseAll()
@@ -61,7 +68,7 @@ class InterfezUi:
             int(self.precio_ma2.get())
             int(self.precio_mi.get())
         except:
-            raise Exception("Los campos Cuantas veces y los precios deben ser del tipo numerico")
+            raise Exception("Los campos 'Cuantas veces' y los 'precios' deben ser del tipo numerico")
         
 
 InterfezUi()

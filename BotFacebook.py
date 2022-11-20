@@ -28,16 +28,27 @@ class Proceso:
         self.dh = DriverHelper("https://www.facebook.com")
 
     def Logueo(self):
+        xpath_no_existe_email = "//*[@id='facebook']/body/div[3]/div[2]/div/div/div/div/div[2]"
+        xpath_no_existe_cuenta = "//*[@id='email_container']/div[2]"
         try:
             varEmail = self.dh.buscarPorXpath("//*[@id='email']")
-            self.dh.escribirEnInput(varEmail, "EMAIL")
+            self.dh.escribirEnInput(varEmail, "USER")
             varPass = self.dh.buscarPorXpath("//*[@id='pass']")
             self.dh.escribirEnInput(varPass, "PASS")
             btnInicioSesion = self.dh.buscarPorXpath("//*[@name='login']")
             btnInicioSesion.click()
-            return False
+            time.sleep(5)
+            self.dh.web_driver().ActionChains(self.dh.common()).send_keys(Keys.ESCAPE).perform()
+            if(self.dh.existe_elemento(xpath_no_existe_email, 5) == True):
+                if(self.dh.buscarPorXpath(xpath_no_existe_email).text == "Is this your account?"
+                or self.dh.buscarPorXpath(xpath_no_existe_email).text == "¿Es tu cuenta?"):
+                    return "El correo ingresado es incorrecto"
+            if(self.dh.existe_elemento(xpath_no_existe_cuenta, 5) == True):
+                if(self.dh.buscarPorXpath(xpath_no_existe_cuenta).text == "El correo electrónico que ingresaste no está conectado a una cuenta. "):
+                    return "El correo ingresado no esta conectado a una cuenta Facebook, verificalo bien"
+            return "" #OK
         except:
-            return True
+            return "Ocurrio un error no esperado en el login. Intentelo de nuevo y si el error persiste contacte con el ADMIN" #error
 
     def GoToMarketplace(self):
         try:
@@ -46,9 +57,9 @@ class Proceso:
             self.dh.escribirEnInput(inputSearchProducts, self.que_buscar)
             inputSearchProducts.send_keys(Keys.ENTER)
             time.sleep(10)
-            return False
+            return ""
         except:
-            return True
+            return "Ocurrio un error no esperado al hacer click en Market Place. Intentelo de nuevo y si el error persiste contacte con el ADMIN"
 
     def DoScrollForPage(self):
         #Primer Paso: Hacer 10 veces scroll
@@ -56,9 +67,9 @@ class Proceso:
             for i in range(0, int(self.cantidadDeScrolls)):
                 self.dh.ejecutarJs("window.scrollBy(0,2500)")
                 time.sleep(4)
-            return False
+            return ""
         except:
-            return True
+            return "Ocurrio un error no esperado al ver los productos. Intentelo de nuevo y si el error persiste contacte con el ADMIN"
 
     def ExtractDataWeb(self):
         #segundo paso: extraer todo el html
