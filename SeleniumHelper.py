@@ -7,8 +7,9 @@ import chromedriver_autoinstaller
 import time
 
 class DriverHelper:
-    def __init__(self, webUrl):
+    def __init__(self, webUrl, debug_mode):
         self.webUrl = webUrl
+        self.debug_mode = debug_mode
         self.driver = self.initDriver()
 
     def initDriver(self):
@@ -17,9 +18,12 @@ class DriverHelper:
         chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
                                       # and if it doesn't exist, download it automatically,
                                       # then add chromedriver to path
+
+        options.add_argument("no-sandbox")
+        options.headless = self.debug_mode
         driver = webdriver.Chrome(options= options)
         driver.get(self.webUrl)
-        driver.maximize_window()
+        driver.set_window_size(1296,696)
         return driver
 
     def buscarPorXpath(self, xpath: str, timeout: int=0) -> WebElement:
@@ -34,6 +38,7 @@ class DriverHelper:
         return elementoXpath.send_keys(escribirValor)
 
     def htmlDeLaPagina(self) -> str:
+        time.sleep(5)
         return self.driver.page_source
 
     def ejecutarJs(self, script: str):
@@ -41,7 +46,7 @@ class DriverHelper:
 
     def cerrar_ventantas(self):
         self.driver.quit()
-    
+
     def existe_elemento(self, xpath: str, timeout = 0) -> bool:
         time.sleep(timeout)
         try:
@@ -49,7 +54,7 @@ class DriverHelper:
             return True
         except:
             return False
-    
+
     def common(self):
         return self.driver
 
@@ -57,4 +62,3 @@ class DriverHelper:
         return webdriver
 
 
-    
