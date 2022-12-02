@@ -16,6 +16,7 @@ class Proceso:
         self.cantidadDeScrolls = cantidad_scroll
         self.correo = correo
         self.passw = passw
+        self.progress = 0
         self.dh = DriverHelper("https://www.facebook.com", True)
 
     def Logueo(self):
@@ -42,6 +43,7 @@ class Proceso:
             #-----------
             #en caso de que existe un popup
             self.dh.web_driver().ActionChains(self.dh.common()).send_keys(Keys.ESCAPE).perform()
+            self.progress = 10
             return "" #OK
         except:
             return "Ocurrio un error no esperado en el login. Intentelo de nuevo y si el error persiste contacte con el ADMIN" #error
@@ -52,6 +54,7 @@ class Proceso:
             inputSearchProducts = self.dh.buscarXPorXpath("//input[@placeholder='Buscar en Marketplace']", 15)[0]
             self.dh.escribirEnInput(inputSearchProducts, self.que_buscar)
             inputSearchProducts.send_keys(Keys.ENTER)
+            self.progress = 20
             time.sleep(5)
             return ""
         except:
@@ -62,6 +65,7 @@ class Proceso:
             for i in range(0, int(self.cantidadDeScrolls)):
                 self.dh.ejecutarJs("window.scrollBy(0,2500)")
                 time.sleep(4)
+            self.progress = 70
             return ""
         except:
             return "Ocurrio un error no esperado al ver los productos. Intentelo de nuevo y si el error persiste contacte con el ADMIN"
@@ -104,29 +108,27 @@ class Proceso:
             except:
                 continue 
         #---------------
+        self.progress = 80
         return cumpleRequisitos
         
     def CerrarPrimerChromeDriver(self):
         #cerramos todo para cerrar mi perfil
         self.dh.cerrar_ventantas()
+        self.progress = 90
 
     def OpenTabs(self, cumpleRequisitos):
         max_ventanas = 0
-        dh = DriverHelper("https://www.google.com", False)
+        dh = DriverHelper("https://www.facebook.com", False)
+        self.Logueo
         #---------------
         for tabs in cumpleRequisitos:
-            if(tabs is not None and max_ventanas <= 50):
+            if(tabs is not None and max_ventanas <= 20):
                 dh.ejecutarJs("window.open('" + tabs + "')")
                 max_ventanas += 1
                 time.sleep(2)
 
+
     def CloseAll(self):
         self.dh.cerrar_ventantas()
-#test
-# pr = Proceso()
-# pr.Logueo()
-# pr.GoToMarketplace()
-# pr.DoScrollForPage()
-# pr.OpenTabs(pr.ExtractDataWeb())
-# input()
+        self.progress = 100
 

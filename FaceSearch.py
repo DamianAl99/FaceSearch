@@ -7,45 +7,46 @@ class InterfezUi:
         self.ventana = Tk()
         self.ventana.title("FaceSearch")
 
-        aa = Label(self.ventana, text="Que deseas buscar?")
+        aa = Label(self.ventana, text="Que deseas buscar?", background="#00352C", fg="white", font=("Arial", 15))
         aa.grid(row = 0, column = 0, columnspan = 1, padx = 1, pady = 2)
         self.buscar= Entry(self.ventana, font = ("Calibri 12"))
         self.buscar.grid(row = 0, column = 1, columnspan = 1, padx = 15, pady = 15)
         self.buscar.focus()
 
-        bb = Label(self.ventana, text="Cuantas veces deseas buscar?")
+        bb = Label(self.ventana, text="Cuantas veces deseas buscar?", background="#00352C", fg="white", font=("Arial", 15))
         bb.grid(row = 1, column = 0, columnspan = 1, padx = 1, pady = 2)
         self.cuantas_veces = Entry(self.ventana, font = ("Calibri 12"))
         self.cuantas_veces.grid(row = 1, column = 1, columnspan = 1, padx = 15, pady = 15)
 
-        cc = Label(self.ventana, text="Precio minimo")
+        cc = Label(self.ventana, text="Precio minimo", background="#00352C", fg="white", font=("Arial", 15))
         cc.grid(row = 2, column = 0, columnspan = 1, padx = 1, pady = 2)
         self.precio_mi = Entry(self.ventana, font = ("Calibri 12"))
         self.precio_mi.grid(row = 2, column = 1, columnspan = 1, padx = 15, pady = 15)
 
-        dd = Label(self.ventana, text="Precio maximo")
+        dd = Label(self.ventana, text="Precio maximo", background="#00352C", fg="white", font=("Arial", 15))
         dd.grid(row = 3, column = 0, columnspan = 1, padx = 1, pady = 2)
         self.precio_ma = Entry(self.ventana, font = ("Calibri 12"))
         self.precio_ma.grid(row = 3, column = 1, columnspan = 1, padx = 15, pady = 15)
 
-        ee = Label(self.ventana, text="Precio maximo 2")
+        ee = Label(self.ventana, text="Precio maximo 2", background="#00352C", fg="white", font=("Arial", 15))
         ee.grid(row = 4, column = 0, columnspan = 1, padx = 1, pady = 2)
         self.precio_ma2 = Entry(self.ventana, font = ("Calibri 12"))
         self.precio_ma2.grid(row = 4, column = 1, columnspan = 1, padx = 15, pady = 15)
 
-        ff = Label(self.ventana, text="Correo")
+        ff = Label(self.ventana, text="Correo", background="#00352C", fg="white", font=("Arial", 15))
         ff.grid(row = 5, column = 0, columnspan = 1, padx = 1, pady = 2)
         self.correo = Entry(self.ventana, font = ("Calibri 12"))
         self.correo.grid(row = 5, column = 1, columnspan = 1, padx = 15, pady = 15)
 
-        ii = Label(self.ventana, text="Contraseña")
-        ii.grid(row = 6, column = 0, columnspan = 1, padx = 1, pady = 2)
+        ii = Label(self.ventana, text="Contraseña", background="#00352C", fg="white", font=("Arial", 15))
+        ii.grid(row = 6, column = 0, columnspan = 1, padx = 1, pady = 2, )
         self.passw = Entry(self.ventana,show="*", font = ("Calibri 12"))
         self.passw.grid(row = 6, column = 1, columnspan = 1, padx = 15, pady = 15)
         #Botones
         boton_igual = Button(self.ventana, text = "Iniciar", width= 50, height = 2, command = lambda: self.hacer_operacion())
         boton_igual.grid(row= 7, column = 1, padx = 15, pady = 15)
 
+        self.ventana.configure(bg='#00352C')
         self.ventana.mainloop()
 
     def hacer_operacion(self):
