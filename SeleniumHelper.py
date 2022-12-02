@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.remote.webelement import WebElement
+from subprocess import CREATE_NO_WINDOW
 import chromedriver_autoinstaller
 import time
 
@@ -15,6 +16,7 @@ class DriverHelper:
     def initDriver(self):
         options = Options()
         options.add_experimental_option("detach", True)
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
         chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
                                       # and if it doesn't exist, download it automatically,
                                       # then add chromedriver to path
