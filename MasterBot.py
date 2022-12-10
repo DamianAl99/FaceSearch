@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 from lxml import html
 from decimal import Decimal
 import mysql.connector
-import uuid
 
 
 import time
@@ -13,7 +12,7 @@ from SeleniumHelper import DriverHelper
 class Proceso:
     def __init__(self, que_buscar):
         self.que_buscar = que_buscar
-        self.dh = DriverHelper("https://www.facebook.com", False)
+        self.dh = DriverHelper("https://www.facebook.com", True)
 
     def Logueo(self):
         xpath_no_existe_email = "//*[@id='facebook']/body/div[3]/div[2]/div/div/div/div/div[2]"
@@ -23,7 +22,7 @@ class Proceso:
             self.dh.escribirEnInput(varEmail, "damiianalmada06@gmail.com")
             #-----------
             varPass = self.dh.buscarPorXpath("//*[@id='pass']")
-            self.dh.escribirEnInput(varPass, "Vicafeitador99")
+            self.dh.escribirEnInput(varPass, "")
             #-----------
             btnInicioSesion = self.dh.buscarPorXpath("//*[@name='login']")
             btnInicioSesion.click()
@@ -102,7 +101,7 @@ class Proceso:
 
     def SaveDataInDB(self, productos):
         try:
-            mydb = mysql.connector.connect(user="u788216028_BotFace", passwd="Damian44*", host="45.152.46.1", database="u788216028_MasterFace")        
+            mydb = mysql.connector.connect(user="u788216028_BotFace", passwd="", host="45.152.46.1", database="u788216028_MasterFace")        
             mycursor =mydb.cursor(buffered=True)
             for producto in productos:
                 self.BulkInsert(producto['producto'], producto['precio'], producto['descripcion'], producto['link'], mydb, mycursor)
@@ -110,7 +109,7 @@ class Proceso:
             mydb.close()
             return ""
         except Exception as exce:
-            return "Ocurrio un error al insertar los datos a la BD"
+            return "Ocurrio un error al insertar los datos a la BD: "+exce
     
     def BulkInsert(self, product, price, description, link, mydb, mycursor):
         # mydb = mysql.connector.connect(user="u788216028_BotFace", passwd="Damian44*", host="45.152.46.1", database="u788216028_MasterFace")        
@@ -118,7 +117,6 @@ class Proceso:
         sql = "INSERT INTO products (producto, precio, descripcion, link) VALUES (%s, %s, %s, %s)"
         val = (product, price, description, link)
         mycursor.execute(sql, val)
-
         mydb.commit()
 
     def CloseAll(self):
@@ -155,5 +153,8 @@ class main:
             result = pr.SaveDataInDB(cumple_requisito)
             if(result != ""): raise Exception("Database", result)
         print("Ya termino")
-    
-main()
+
+try:    
+    main()
+except Exception as exce:
+    print(exce)
