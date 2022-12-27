@@ -27,6 +27,11 @@ class Proceso:
                 if precioDB >= self.precio_mi and (precioDB <= self.precio_ma or precioDB <= self.precio_ma2):
                     self.cumple_requisitos.append(productDB)
             #--------------------------------------
+            cumple_requisitos_ordenado = self.cumple_requisitos.sort()
+            self.productos_mas_economicos = cumple_requisitos_ordenado[0:3]
+            lista_de_precios = [(sum(producto[0])/len(productDB)) for producto in productDB]
+            self.precios_promedios_del_producto = lista_de_precios
+            #--------------------------------------
             mycursor.close()
             mydb.close()
             return ""

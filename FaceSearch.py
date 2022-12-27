@@ -45,7 +45,6 @@ class InterfezUi:
             if result != "":  messagebox.showerror("Error inesperado", result)
             #limpiar inputs
             self.buscar.delete(0, 'end')
-            self.cuantas_veces.delete(0, 'end')
             self.precio_ma.delete(0, 'end')
             self.precio_ma2.delete(0, 'end')
             self.precio_mi.delete(0, 'end')

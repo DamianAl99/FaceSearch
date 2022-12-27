@@ -22,7 +22,7 @@ class Proceso:
             self.dh.escribirEnInput(varEmail, "damiianalmada06@gmail.com")
             #-----------
             varPass = self.dh.buscarPorXpath("//*[@id='pass']")
-            self.dh.escribirEnInput(varPass, "")
+            self.dh.escribirEnInput(varPass,"Vicafeitador99")
             #-----------
             btnInicioSesion = self.dh.buscarPorXpath("//*[@name='login']")
             btnInicioSesion.click()
